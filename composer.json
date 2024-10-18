@@ -1,0 +1,21 @@
+{
+    "name": "pedro/prodsphp",
+    "description": "API de CRUD em php",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Pedro\\Prodsphp\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "PedroLourenco18",
+            "email": "pedroedu2007@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "pecee/simple-router": "dev-master",
+        "google/apiclient": "^2.0@dev"
+    }
+}
