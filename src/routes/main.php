@@ -29,5 +29,5 @@ try{
 
     SimpleRouter::start();
 }catch(Pecee\SimpleRouter\Exceptions\NotFoundHttpException $e){
-    header("Location: http://localhost/rest/404");
+    header("Location: http://localhost/prodsphp/404");
 }
