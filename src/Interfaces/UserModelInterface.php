@@ -2,10 +2,9 @@
 
 namespace src\Interfaces;
 
-use src\Interfaces\DbConnectionInterface;
+use src\Interfaces\ModelInterface;
 
-interface UserModelInterface{
-    public function __construct(DbConnectionInterface $dbConnection);
+interface UserModelInterface extends ModelInterface{
     public function searchById(int $id);
     public function searchByEmail(string $email);
     public function create(array $data);

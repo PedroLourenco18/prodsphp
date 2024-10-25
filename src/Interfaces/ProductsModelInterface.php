@@ -2,10 +2,9 @@
 
 namespace src\Interfaces;
 
-use src\Interfaces\DbConnectionInterface;
+use src\Interfaces\ModelInterface;
 
-interface ProductsModelInterface{
-    public function __construct(DbConnectionInterface $dbConnection);
+interface ProductsModelInterface extends ModelInterface{
     public function read();
     public function searchById(int $id);
     public function create(array $data);
