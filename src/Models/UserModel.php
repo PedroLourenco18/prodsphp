@@ -32,6 +32,8 @@ class UserModel implements UserModelInterface{
             $data["role"],
             $data["password"]
         ]);
+
+        return $this->con->getLastInsertId();
     }
 
     public function update(int $id, array $data){
@@ -39,7 +41,7 @@ class UserModel implements UserModelInterface{
         $values = [];
         
         foreach($data as $key => $value){
-            $columns = $key." =?, ";
+            $columns .= $key." =?, ";
             array_push($values, $value);
         }
         $columns = substr($columns, 0, -2);

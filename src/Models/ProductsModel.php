@@ -31,6 +31,8 @@ class ProductsModel implements ProductsModelInterface{
             $data["name"],
             $data["price"]
         ]);
+
+        return $this->con->getLastInsertId();
     }
 
     public function update(int $id, array $data){
@@ -38,7 +40,7 @@ class ProductsModel implements ProductsModelInterface{
         $values = [];
 
         foreach($data as $key => $value){
-            $columns = $key." =?, ";
+            $columns .= $key." =?, ";
             array_push($values, $value);
         }
         $columns = substr($columns, 0, -2);

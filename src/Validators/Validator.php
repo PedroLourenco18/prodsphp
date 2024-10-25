@@ -14,11 +14,9 @@ abstract class Validator implements ValidatorInterface{
                 if($allRequired){
                     throw new HttpException(400, "The field {$field} is required");
                 }
-                break;
             }else{
                 $this->fieldsValidator($field, $content);
                 $filteredData[$field] = $content;
-                break;
             }
         }
 

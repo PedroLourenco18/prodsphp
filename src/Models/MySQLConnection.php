@@ -6,7 +6,7 @@ use PDO;
 use src\Interfaces\DbConnectionInterface;
 use Dotenv\Dotenv;
 
-$dotenv =  Dotenv::createImmutable(__DIR__);
+$dotenv =  Dotenv::createImmutable(DEVELOPMENT_URL);
 $dotenv->load();
 
 class MySQLConnection implements DbConnectionInterface{
