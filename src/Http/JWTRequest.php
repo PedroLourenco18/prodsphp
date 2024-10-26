@@ -8,7 +8,7 @@ use Firebase\JWT\Key;
 use Dotenv\Dotenv;
 use src\Exceptions\HttpException;
 
-$dotenv =  Dotenv::createImmutable(__DIR__);
+$dotenv =  Dotenv::createImmutable(DEVELOPMENT_URL);
 $dotenv->load();
 
 class JWTRequest implements RequestInterface{
@@ -21,7 +21,7 @@ class JWTRequest implements RequestInterface{
             
             $this->body = match($method){
                 "GET" => $_GET,
-                default => json_decode(file_get_contents('php://input', true), true)
+                default => json_decode(file_get_contents('php://input', true), true) ?? []
             };
         }
 
@@ -49,7 +49,7 @@ class JWTRequest implements RequestInterface{
                 //trasnform std class to array
                 $this->jwtPayload = json_decode(json_encode($decoded), true);
             }catch(\Exception $exception){
-                throw new HttpException(400, "The authorization token is invalid or was not given");
+                throw new HttpException(401, "The authorization token is invalid or was not given");
             }
         }
 
