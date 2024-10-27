@@ -12,13 +12,13 @@ class UserModel implements UserModelInterface{
     }
 
     public function searchById(int $id){
-        $sql = "SELECT * FROM users WHERE id = {$id}";
+        $sql = "SELECT id, name, email, role FROM users WHERE id = {$id}";
 
         return $this->con->fetch($sql);
     }
 
     public function searchByEmail(string $email){
-        $sql = "SELECT * FROM users WHERE email = {$email}";
+        $sql = "SELECT * FROM users WHERE email = '{$email}'";
 
         return $this->con->fetch($sql);
     }
