@@ -4,8 +4,35 @@ namespace src\Services;
 
 use src\Exceptions\HttpException;
 use src\Services\Service;
+use Firebase\JWT\JWT;
+use Dotenv\Dotenv;
+
+$dotenv =  Dotenv::createImmutable(DEVELOPMENT_URL);
+$dotenv->load();
 
 class UserService extends Service{
+    public function login(array $data){
+        $filteredData = $this->validator->dataFilter([
+            "email" => $data["email"] ?? null,
+            "password" => $data["password"] ?? null
+        ], true);
+
+        $user = $this->model->searchByEmail($filteredData["email"]);
+
+        if(!($user && password_verify($filteredData["password"], $user["password"]))){
+            throw new HttpException(400, "Invalid email or password");
+        }
+
+        $payload = [
+            "sub" => $user["id"],
+            "name" => $user["name"],
+            "role" => $user["role"]
+        ];
+
+        $jwt = JWT::encode($payload, $_ENV["JWT_KEY"], 'HS256');
+
+        return $jwt;
+    }
     public function searchById(int $id){
         $user = $this->model->searchById($id);
         if(!$user){
@@ -44,7 +71,15 @@ class UserService extends Service{
             throw new HttpException(500, "Sorry, there was an internal error");
         }
 
-        return $userId;
+        $payload = [
+            "sub" => $userId,
+            "name" => $filteredData["name"],
+            "role" => $filteredData["role"]
+        ];
+
+        $jwt = JWT::encode($payload, $_ENV["JWT_KEY"], 'HS256');
+
+        return $jwt;
     }
 
     public function update(int $id, array $data){
@@ -57,7 +92,7 @@ class UserService extends Service{
             "email" => $data["email"] ?? null,
             "role" => $data["role"] ?? null,
             "password" => $data["password"] ?? null
-        ], true);
+        ], false);
 
         if(isset($filteredData["email"]) && $this->model->searchByEmail($filteredData["email"])){
             throw new HttpException(400, "This email is already being used by another account");

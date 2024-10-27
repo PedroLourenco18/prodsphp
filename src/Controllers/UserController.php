@@ -41,6 +41,24 @@ class UserController{
         }
     }
 
+    public function login(){
+        try{
+            $loginData = $this->request->getBody();
+
+            $jwt = $this->service->login($loginData);
+
+            $this->response->setError(false);
+            $this->response->setHttpCode(200);
+            $this->response->setMessage($jwt);
+        }catch(HttpException $exception){
+            $this->response->setError(true);
+            $this->response->setHttpCode($exception->getHttpCode());
+            $this->response->setMessage($exception->getMessage());    
+        }finally{
+            $this->response->send();
+        }
+    }
+
     public function search(){
         try{
             $userId = $this->request->getAuthCodeData()["sub"];
