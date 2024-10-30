@@ -19,6 +19,10 @@ class UserService extends Service{
 
         $user = $this->model->searchByEmail($filteredData["email"]);
 
+        if($user["auth_provider"] != "prodsphp"){
+            throw new HttpException(400, "This account is registered with {$user["auth_provider"]}. Try signing in with it");
+        }
+
         if(!($user && password_verify($filteredData["password"], $user["password"]))){
             throw new HttpException(400, "Invalid email or password");
         }
@@ -58,6 +62,7 @@ class UserService extends Service{
             "role" => $data["role"] ?? null,
             "password" => $data["password"] ?? null
         ], true);
+        $filteredData["auth_provider"] = "prodsphp";
 
         if($this->model->searchByEmail($filteredData["email"])){
             throw new HttpException(400, "This email is already being used by another account");
