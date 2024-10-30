@@ -24,13 +24,14 @@ class UserModel implements UserModelInterface{
     }
 
     public function create(array $data){
-        $sql = "INSERT INTO users (`id`, `name`, `email`, `role`, `password`) VALUES (NULL, ?, ?, ?, ?);";
+        $sql = "INSERT INTO users (`id`, `name`, `email`, `role`, `password`, `auth_provider`) VALUES (NULL, ?, ?, ?, ?, ?);";
 
         $this->con->execute($sql, [
             $data["name"],
             $data["email"],
             $data["role"],
-            $data["password"]
+            $data["password"],
+            $data["auth_provider"]
         ]);
 
         return $this->con->getLastInsertId();

@@ -25,7 +25,8 @@ try{
     SimpleRouter::post("prodsphp/user/login", "UserController@login");
 
     //OAUTH 2.0 ROUTES
-    SimpleRouter::get("prodsphp/oauth/google", "OauthController@google");
+    SimpleRouter::get("prodsphp/oauth2/google", "GoogleOauthController@auth");
+    SimpleRouter::get("prodsphp/oauth2/google/link", "GoogleOauthController@getLink");
 
     SimpleRouter::start();
 }catch(Pecee\SimpleRouter\Exceptions\NotFoundHttpException $e){
