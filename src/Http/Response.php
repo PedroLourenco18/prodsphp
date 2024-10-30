@@ -6,6 +6,7 @@ class Response{
     private int $httpCode;
     private bool $error;
     private string $message;
+    private string $authToken;
     private array $data;
     public function setHttpCode(int $httpCode){
         $this->httpCode = $httpCode;
@@ -17,6 +18,10 @@ class Response{
 
     public function setMessage(string $message){
         $this->message = $message;
+    }
+
+    public function setAuthToken(string $authToken){
+        $this->authToken = $authToken;
     }
 
     public function setData(array $data){
@@ -33,6 +38,10 @@ class Response{
 
         if(isset($this->message)){
             $body["message"] = $this->message;
+        }
+
+        if(isset($this->authToken)){
+            $body["auth_token"] = $this->authToken;
         }
 
         if(isset($this->data)){

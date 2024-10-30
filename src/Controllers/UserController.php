@@ -49,7 +49,7 @@ class UserController{
 
             $this->response->setError(false);
             $this->response->setHttpCode(200);
-            $this->response->setMessage($jwt);
+            $this->response->setAuthToken($jwt);
         }catch(HttpException $exception){
             $this->response->setError(true);
             $this->response->setHttpCode($exception->getHttpCode());
@@ -85,7 +85,7 @@ class UserController{
 
             $this->response->setError(false);
             $this->response->setHttpCode(201);
-            $this->response->setMessage($jwt);
+            $this->response->setAuthToken($jwt);
         }catch(HttpException $exception){
             $this->response->setError(true);
             $this->response->setHttpCode($exception->getHttpCode());
